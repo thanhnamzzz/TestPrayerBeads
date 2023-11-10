@@ -34,13 +34,25 @@ public class MainActivity extends AppCompatActivity {
         mListImage = new ArrayList<>();
         listBase = new ArrayList<>();
 
-        listBase.add(new ImageObject(R.drawable.bead_small));
-        listBase.add(new ImageObject(R.drawable.bead_small));
-        listBase.add(new ImageObject(R.drawable.bead_small));
-        listBase.add(new ImageObject(R.drawable.bead_small));
-        listBase.add(new ImageObject(R.drawable.bead_small));
-        listBase.add(new ImageObject(R.drawable.bead_small));
-        listBase.add(new ImageObject(R.drawable.bead_small));
+        for (int i = 0; i < 30; i++) {
+            listBase.add(new ImageObject(i, R.drawable.bead_small));
+        }
+
+//        listBase.add(new ImageObject(100, R.drawable.bead_small));
+//        listBase.add(new ImageObject(101, R.drawable.bead_small));
+//        listBase.add(new ImageObject(102, R.drawable.bead_small));
+//        listBase.add(new ImageObject(103, R.drawable.bead_small));
+//        listBase.add(new ImageObject(104, R.drawable.bead_small));
+//        listBase.add(new ImageObject(105, R.drawable.bead_small));
+//        listBase.add(new ImageObject(106, R.drawable.bead_small));
+//        listBase.add(new ImageObject(107, R.drawable.bead_small));
+//        listBase.add(new ImageObject(108, R.drawable.bead_small));
+//        listBase.add(new ImageObject(109, R.drawable.bead_small));
+//        listBase.add(new ImageObject(110, R.drawable.bead_small));
+//        listBase.add(new ImageObject(111, R.drawable.bead_small));
+//        listBase.add(new ImageObject(112, R.drawable.bead_small));
+//        listBase.add(new ImageObject(113, R.drawable.bead_small));
+//        listBase.add(new ImageObject(114, R.drawable.bead_small));
 
         mListImage.addAll(listBase);
 
@@ -83,9 +95,9 @@ public class MainActivity extends AppCompatActivity {
 //        });
 
         view_pager.setAdapter(imageAdapter);
-        view_pager.setCurrentItem(3);
+        view_pager.setCurrentItem(15);
 
-        view_pager.setOffscreenPageLimit(6);
+        view_pager.setOffscreenPageLimit(5);
         view_pager.setClipChildren(false);
         view_pager.setClipToPadding(false);
         view_pager.getChildAt(0).setOverScrollMode(RecyclerView.OVER_SCROLL_NEVER);
@@ -102,19 +114,25 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
-                Log.d("Gambi", "onPageSelected: " + position);
-                if (position > mListImage.size() - 4) {
-                    mListImage.addAll(listBase);
-                    imageAdapter.setData(mListImage);
-                    imageAdapter.notifyItemRangeChanged(0, mListImage.size());
-//                } else if (position == 0) {
-//                    mListImage.add(0, new ImageObject(R.drawable.bead_small));
-//                    mListImage.add(0, new ImageObject(R.drawable.bead_small));
-//                    mListImage.add(0, new ImageObject(R.drawable.bead_small));
-                }
-                currentPosition = position;
-                delta = currentPosition - previousPosition;
-                Log.d("Gambi", "onPageSelected: delta = " + delta);
+//                Log.d("Gambi", "onPageSelected: " + position);
+//                if (position > mListImage.size() - 4) {
+//                    mListImage.addAll(listBase);
+//                    imageAdapter.setData(mListImage);
+//                    imageAdapter.notifyItemRangeChanged(0, mListImage.size());
+////                } else if (position == 0) {
+////                    mListImage.add(0, new ImageObject(R.drawable.bead_small));
+////                    mListImage.add(0, new ImageObject(R.drawable.bead_small));
+////                    mListImage.add(0, new ImageObject(R.drawable.bead_small));
+//                }
+//                currentPosition = position;
+//                delta = currentPosition - previousPosition;
+//                Log.d("Gambi", "onPageSelected: delta = " + delta);
+
+                if (imageAdapter.getFirstValue() >= imageAdapter.getValue(position) - 2)
+                    imageAdapter.addPreviousItem();
+
+                if (imageAdapter.getLastValue() <= imageAdapter.getValue(position) + 2)
+                    imageAdapter.addLastItem();
             }
 
             @Override
